@@ -22,7 +22,9 @@ new Vue({
         temp_max: null,
         temp_min: null,
         refCount: 0,
+        isLoading: false,
         country: null,
+        isGetCity: false,
     },
     methods: {
         async getCoords() {
@@ -109,6 +111,17 @@ new Vue({
 
             return days[date.getDay()];
         },
+        setLoading(isLoading) {
+            if (isLoading) {
+                this.refCount += 1;
+                this.isLoading = true;
+                document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+            } else if (this.refCount > 0) {
+                this.refCount -= 1;
+                this.isLoading = this.refCount > 0;
+                document.getElementsByTagName('body')[0].style.overflow = 'auto';
+            }
+        },
         getTheme() {
             this.main.dt = new Date(this.main.dt * 1000).toLocaleString('ru', {
                 hour: '2-digit',
@@ -121,9 +134,51 @@ new Vue({
         getCity() {
             this.isGetCity = true;
         },
+        setCity() {
+            this.getCoords();
+            this.isGetCity = false;
+        },
+        getLocationCoords(el) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(this.setNavigation, () => {
+                    el.setAttribute('disabled', 'true');
+                });
+            }
+        },
+        setNavigation(position) {
+            this.cords.lon = position.coords.longitude;
+            this.cords.lat = position.coords.latitude;
+            this.getCityAndState();
+            this.isGetCity = false;
+        },
     },
     beforeMount() {
         this.getCoords();
+    },
+    created() {
+        // eslint-disable-next-line no-undef
+        axios.interceptors.request.use(
+            (config) => {
+                this.setLoading(true);
+                return config;
+            },
+            (error) => {
+                this.setLoading(false);
+                return Promise.reject(error);
+            },
+        );
+
+        // eslint-disable-next-line no-undef
+        axios.interceptors.response.use(
+            (response) => {
+                this.setLoading(false);
+                return response;
+            },
+            (error) => {
+                this.setLoading(false);
+                return Promise.reject(error);
+            },
+        );
     },
 
     components: {
