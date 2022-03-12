@@ -1,0 +1,232 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+:root {
+    --primary-light: #8abdff;
+    --white: #FFFFFF;
+    --greyLight-1: #E4EBF5;
+    --greyLight-2: #c8d0e7;
+    --greyLight-3: #bec8e4;
+    --greyDark: #9baacf;
+}
+
+html {
+    background-color: #f0f0f0;
+}
+
+body {
+    color: #999999;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0;
+}
+
+#app {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+
+.btn--block {
+    display: block;
+    width: 100%;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.cards__item {
+    display: flex;
+    padding: 1rem;
+}
+
+@media (min-width: 60rem) {
+    .cards__item {
+        width: 50%;
+    }
+
+}
+
+@media (min-width: 86rem) {
+    .cards__item {
+        width: 33%;
+    }
+}
+
+.card {
+    background: none;
+    border-radius: 1rem;
+    box-shadow: .3rem .3rem .6rem var(--greyLight-2),
+    -.2rem -.2rem .5rem var(--white);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+}
+
+.card__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.card__image {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    overflow: hidden;
+    position: relative;
+    transition: filter 0.5s cubic-bezier(.43, .41, .22, .91);
+    object-fit: cover;
+    height: 24rem;
+    width: 100%;
+}
+
+.card__image::before {
+    content: "";
+    display: block;
+    padding-top: 56.25%;
+}
+
+@media (min-width: 40rem) {
+    .card__image::before {
+        padding-top: 66.6%;
+    }
+}
+
+@media (max-width: 1000px) {
+    #app {
+        width: auto;
+    }
+}
+
+@media (max-width: 400px) {
+    .card__image {
+        height: auto;
+        align-self: center;
+    }
+
+    #app {
+        width: auto;
+    }
+}
+
+.card__title {
+    color: #696969;
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.card__text {
+    flex: 1 1 auto;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+}
+
+.search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.search__box {
+    background: #f0f0f0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    box-shadow: .3rem .3rem .6rem var(--greyLight-2),
+    -.2rem -.2rem .5rem var(--white);
+    border-radius: 1rem;
+}
+
+.search__input {
+    height: 3rem;
+    border: none;
+    font-size: 1.4rem;
+    background: none;
+    color: var(--greyDark);
+    text-align: center;
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+.search__input::placeholder {
+    color: var(--greyLight-3);
+}
+
+.search__input:focus {
+    outline: none;
+    box-shadow: inset .2rem .2rem .5rem var(--greyLight-2),
+    inset -.2rem -.2rem .5rem var(--white);
+}
+
+.search__icon {
+    height: 2rem;
+    position: absolute;
+    font-size: 2rem;
+    padding: 0 1rem;
+    display: flex;
+    color: var(--greyDark);
+    transition: .3s ease;
+}
+
+.btn {
+    margin: 1rem;
+    width: 7rem;
+    height: 3rem;
+    border-radius: 1rem;
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .3s ease;
+    font-size: 1.25rem;
+    border: none;
+    background: #9baacf;
+    box-shadow: inset .2rem .2rem .5rem var(--greyLight-2),
+    inset -.2rem -.2rem .5rem var(--greyLight-2);
+    color: #FFFFFF;
+}
+
+.btn__secondary {
+    grid-column: 0.5;
+    grid-row: 0.83333333333333;
+
+}
+
+.btn__secondary:active {
+    box-shadow: -0.2rem -0.2rem .5rem var(--white);
+    background: #8abdff;
+}
+

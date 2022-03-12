@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Start of the day app</title>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+<!-- Подключаем скрипты-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/libs/vue.js" type="module"></script>
+<script src="js/main.js" type="module" defer></script>
+
+<main class="main-container" id="app">
+    <!-- Определение города-->
+
+
+    <!-- Preloader -->
+
+
+    <div class="location-and-date">
+        <h1 class="location-and-date__location">
+            Томск
+            <a class="location-and-date__choose"
+            ><img
+                    src="icons/location.png"
+                    alt="location"
+                    class="location-and-date__icon"
+            /></a>
+        </h1>
+        <div>10 января 20222 года</div>
+    </div>
+
+    <!-- Погода прямо сейчас -->
+
+    <div class="current-temperature">
+        <div class="current-temperature__icon-container">
+            <img src="#" class="current-temperature__icon" alt="current-image" />
+        </div>
+
+        <div class="current-temperature__content-container">
+            <div class="current-temperature__value">
+                12&deg;
+            </div>
+            <div class="current-temperature__summary">
+                Lorem ipsum dolor sit amet.
+            </div>
+        </div>
+    </div>
+
+    <div class="current-stats">
+        <div>
+            <div class="current-stats__value">
+                10&deg;
+            </div>
+            <div class="current-stats__label">Макс</div>
+            <div class="current-stats__value">
+                1&deg;
+            </div>
+            <div class="current-stats__label">Мин</div>
+        </div>
+        <div>
+            <div class="current-stats__value">10 м/с</div>
+            <div class="current-stats__label">Ветер</div>
+            <div class="current-stats__value">10%</div>
+            <div class="current-stats__label">Влажность</div>
+        </div>
+        <div>
+            <div class="current-stats__value">9:00</div>
+            <div class="current-stats__label">Восход</div>
+            <div class="current-stats__value">0:00</div>
+            <div class="current-stats__label">Закат</div>
+        </div>
+    </div>
+
+    <!-- Погода на сегодня -->
+
+    <div class="weather-by-hour">
+        <h2 class="weather-by-hour__heading">Погода на следующие 12 часов</h2>
+        <div class="weather-by-hour__container">
+
+            <div class="weather-by-hour__item">
+                <div class="weather-by-hour__hour">10:30</div>
+                <img src="#" alt="Mostly sunny" />
+                <div>15&deg;</div>
+            </div>
+            <div class="weather-by-hour__item">
+                <div class="weather-by-hour__hour">10:30</div>
+                <img src="#" alt="Mostly sunny" />
+                <div>15&deg;</div>
+            </div>
+            <div class="weather-by-hour__item">
+                <div class="weather-by-hour__hour">10:30</div>
+                <img src="#" alt="Mostly sunny" />
+                <div>15&deg;</div>
+            </div>
+            <div class="weather-by-hour__item">
+                <div class="weather-by-hour__hour">10:30</div>
+                <img src="#" alt="Mostly sunny" />
+                <div>15&deg;</div>
+            </div>
+            <div class="weather-by-hour__item">
+                <div class="weather-by-hour__hour">10:30</div>
+                <img src="#" alt="Mostly sunny" />
+                <div>15&deg;</div>
+            </div>
+            <div class="weather-by-hour__item">
+                <div class="weather-by-hour__hour">10:30</div>
+                <img src="#" alt="Mostly sunny" />
+                <div>15&deg;</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Погода на следующую неделю-->
+
+    <div class="week">
+        <h2 class="week__heading">Погода на следующую неделю</h2>
+        <div class="week__container">
+            <div class="week__row">
+                <div class="week__date">
+                    30.10.2040
+                    <div class="week__label">
+                       17:00
+                    </div>
+                </div>
+
+                <div class="week__low">
+                    10&deg;
+                    <div class="week__label">Мин</div>
+                </div>
+
+                <div class="week__high">
+                    12&deg;
+                    <div class="week__label">Макс</div>
+                </div>
+
+                <div class="week__icon">
+                    <img src="#" alt="Sunny">
+                </div>
+
+                <div class="week__rain">
+                    10%
+                    <div class="week__label">Влажность</div>
+                </div>
+
+                <div class="week__wind">
+                    10 м/с
+                    <div class="week__label">Ветер</div>
+                </div>
+            </div>
+            <div class="week__row">
+                <div class="week__date">
+                    30.10.2040
+                    <div class="week__label">
+                        17:00
+                    </div>
+                </div>
+
+                <div class="week__low">
+                    10&deg;
+                    <div class="week__label">Мин</div>
+                </div>
+
+                <div class="week__high">
+                    12&deg;
+                    <div class="week__label">Макс</div>
+                </div>
+
+                <div class="week__icon">
+                    <img src="#" alt="Sunny">
+                </div>
+
+                <div class="week__rain">
+                    10%
+                    <div class="week__label">Влажность</div>
+                </div>
+
+                <div class="week__wind">
+                    10 м/с
+                    <div class="week__label">Ветер</div>
+                </div>
+            </div>
+            <div class="week__row">
+                <div class="week__date">
+                    30.10.2040
+                    <div class="week__label">
+                        17:00
+                    </div>
+                </div>
+
+                <div class="week__low">
+                    10&deg;
+                    <div class="week__label">Мин</div>
+                </div>
+
+                <div class="week__high">
+                    12&deg;
+                    <div class="week__label">Макс</div>
+                </div>
+
+                <div class="week__icon">
+                    <img src="#" alt="Sunny">
+                </div>
+
+                <div class="week__rain">
+                    10%
+                    <div class="week__label">Влажность</div>
+                </div>
+
+                <div class="week__wind">
+                    10 м/с
+                    <div class="week__label">Ветер</div>
+                </div>
+            </div>
+            <div class="week__row">
+                <div class="week__date">
+                    30.10.2040
+                    <div class="week__label">
+                        17:00
+                    </div>
+                </div>
+
+                <div class="week__low">
+                    10&deg;
+                    <div class="week__label">Мин</div>
+                </div>
+
+                <div class="week__high">
+                    12&deg;
+                    <div class="week__label">Макс</div>
+                </div>
+
+                <div class="week__icon">
+                    <img src="#" alt="Sunny">
+                </div>
+
+                <div class="week__rain">
+                    10%
+                    <div class="week__label">Влажность</div>
+                </div>
+
+                <div class="week__wind">
+                    10 м/с
+                    <div class="week__label">Ветер</div>
+                </div>
+            </div>
+            <div class="week__row">
+                <div class="week__date">
+                    30.10.2040
+                    <div class="week__label">
+                        17:00
+                    </div>
+                </div>
+
+                <div class="week__low">
+                    10&deg;
+                    <div class="week__label">Мин</div>
+                </div>
+
+                <div class="week__high">
+                    12&deg;
+                    <div class="week__label">Макс</div>
+                </div>
+
+                <div class="week__icon">
+                    <img src="#" alt="Sunny">
+                </div>
+
+                <div class="week__rain">
+                    10%
+                    <div class="week__label">Влажность</div>
+                </div>
+
+                <div class="week__wind">
+                    10 м/с
+                    <div class="week__label">Ветер</div>
+                </div>
+            </div>
+            <div class="week__row">
+                <div class="week__date">
+                    30.10.2040
+                    <div class="week__label">
+                        17:00
+                    </div>
+                </div>
+
+                <div class="week__low">
+                    10&deg;
+                    <div class="week__label">Мин</div>
+                </div>
+
+                <div class="week__high">
+                    12&deg;
+                    <div class="week__label">Макс</div>
+                </div>
+
+                <div class="week__icon">
+                    <img src="#" alt="Sunny">
+                </div>
+
+                <div class="week__rain">
+                    10%
+                    <div class="week__label">Влажность</div>
+                </div>
+
+                <div class="week__wind">
+                    10 м/с
+                    <div class="week__label">Ветер</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Информация, полученная из Nasa APOD API -->
+
+    <div class="nasa">
+        <h2 class="nasa__heading">Информация полученная Nasa</h2>
+        <div class="nasa__container">
+
+            <div class="nasa__item">
+
+                <div class="nasa__title">Звездное небо</div>
+                <img src="#" alt="Mostly sunny">
+                <div class="nasa__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum, odit.</div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</main>
+</body>
+</html>
