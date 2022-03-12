@@ -22,72 +22,34 @@
     <div class="search">
         <div class="search__box">
             <label>
-                <input type="text" class="search__input" placeholder="Поиск коллекции">
+                <input type="text" class="search__input" placeholder="Поиск коллекции" v-model="inputQuery" v-on:keyup.enter="getSearch">
             </label>
-            <button class="btn btn--block card__btn btn__secondary">Поиск</button>
+            <button class="btn btn--block card__btn btn__secondary" @click="getSearch">Поиск</button>
         </div>
     </div>
 
     <ul class="cards">
-        <li class="cards__item">
+        <li class="cards__item" v-if="isRandomCard">
             <div class="card">
-                <img class="card__image" src="#" alt="randomCard">
+                <img class="card__image" :src="randomCard.url" alt="randomCard">
                 <div class="card__content">
-                    <div class="card__title">Название</div>
-                    <p class="card__text">Lorem ipsum dolor sit amet.</p>
+                    <div class="card__title">{{randomCard.description}}</div>
+                    <p class="card__text">{{randomCard.user}}</p>
                 </div>
             </div>
         </li>
 
-        <li class="cards__item">
-            <div class="card">
-                <img class="card__image" src="#" alt="randomCard">
-                <div class="card__content">
-                    <div class="card__title">Название</div>
-                    <p class="card__text">Lorem ipsum dolor sit amet.</p>
+        <template v-if="collections" v-for="c in collections">
+            <li class="cards__item" v-for="m in c.preview_photos">
+                <div class="card">
+                    <img class="card__image" :src="m.urls.small" alt="randomCard">
+                    <div class="card__content">
+                        <div class="card__title">{{c.title}}</div>
+                        <p class="card__text">{{c.user}}</p>
+                    </div>
                 </div>
-            </div>
-        </li>
-
-        <li class="cards__item">
-            <div class="card">
-                <img class="card__image" src="#" alt="randomCard">
-                <div class="card__content">
-                    <div class="card__title">Название</div>
-                    <p class="card__text">Lorem ipsum dolor sit amet.</p>
-                </div>
-            </div>
-        </li>
-
-        <li class="cards__item">
-            <div class="card">
-                <img class="card__image" src="#" alt="randomCard">
-                <div class="card__content">
-                    <div class="card__title">Название</div>
-                    <p class="card__text">Lorem ipsum dolor sit amet.</p>
-                </div>
-            </div>
-        </li>
-
-        <li class="cards__item">
-            <div class="card">
-                <img class="card__image" src="#" alt="randomCard">
-                <div class="card__content">
-                    <div class="card__title">Название</div>
-                    <p class="card__text">Lorem ipsum dolor sit amet.</p>
-                </div>
-            </div>
-        </li>
-
-        <li class="cards__item">
-            <div class="card">
-                <img class="card__image" src="#" alt="randomCard">
-                <div class="card__content">
-                    <div class="card__title">Название</div>
-                    <p class="card__text">Lorem ipsum dolor sit amet.</p>
-                </div>
-            </div>
-        </li>
+            </li>
+        </template>
 
     </ul>
 
