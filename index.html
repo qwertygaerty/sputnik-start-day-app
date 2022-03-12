@@ -19,36 +19,34 @@
 <main class="main-container" id="app">
     <!-- Определение города-->
 
-
     <!-- Preloader -->
-
 
     <div class="location-and-date">
         <h1 class="location-and-date__location">
-            Томск
-            <a class="location-and-date__choose"
+            {{city}}
+            <a class="location-and-date__choose" @click="getCity"
             ><img
                     src="icons/location.png"
                     alt="location"
                     class="location-and-date__icon"
             /></a>
         </h1>
-        <div>10 января 20222 года</div>
+        <div>{{state}} {{today}}</div>
     </div>
 
     <!-- Погода прямо сейчас -->
 
     <div class="current-temperature">
         <div class="current-temperature__icon-container">
-            <img src="#" class="current-temperature__icon" alt="current-image" />
+            <img :src="main.image" class="current-temperature__icon" alt="" />
         </div>
 
-        <div class="current-temperature__content-container">
+        <div class="current-temperature__content-container" v-if="main.weather">
             <div class="current-temperature__value">
-                12&deg;
+                {{Math.round(main.temp - 273.15)}}&deg;
             </div>
             <div class="current-temperature__summary">
-                Lorem ipsum dolor sit amet.
+                {{main.weather[0].description}}
             </div>
         </div>
     </div>
@@ -56,24 +54,24 @@
     <div class="current-stats">
         <div>
             <div class="current-stats__value">
-                10&deg;
+                {{Math.round(temp_max - 273.15)}}&deg;
             </div>
             <div class="current-stats__label">Макс</div>
             <div class="current-stats__value">
-                1&deg;
+                {{Math.floor(temp_min - 273.15)}}&deg;
             </div>
             <div class="current-stats__label">Мин</div>
         </div>
         <div>
-            <div class="current-stats__value">10 м/с</div>
+            <div class="current-stats__value">{{main.wind_speed}} м/с</div>
             <div class="current-stats__label">Ветер</div>
-            <div class="current-stats__value">10%</div>
+            <div class="current-stats__value">{{main.humidity}}%</div>
             <div class="current-stats__label">Влажность</div>
         </div>
         <div>
-            <div class="current-stats__value">9:00</div>
+            <div class="current-stats__value">{{main.sunrise}}</div>
             <div class="current-stats__label">Восход</div>
-            <div class="current-stats__value">0:00</div>
+            <div class="current-stats__value">{{main.sunset}}</div>
             <div class="current-stats__label">Закат</div>
         </div>
     </div>
@@ -82,39 +80,19 @@
 
     <div class="weather-by-hour">
         <h2 class="weather-by-hour__heading">Погода на следующие 12 часов</h2>
-        <div class="weather-by-hour__container">
-
-            <div class="weather-by-hour__item">
-                <div class="weather-by-hour__hour">10:30</div>
-                <img src="#" alt="Mostly sunny" />
-                <div>15&deg;</div>
+        <div
+                class="weather-by-hour__container"
+                v-bind:class="{up: refCount === 0}"
+        >
+            <div
+                    class="weather-by-hour__item"
+                    v-if="hourly[0]"
+                    v-for="i of hourly"
+            >
+                <div class="weather-by-hour__hour">{{getDateUnix(i.dt)}}</div>
+                <img :src="i.image" alt="Mostly sunny" />
+                <div>{{Math.round(i.temp - 273.15)}}&deg;</div>
             </div>
-            <div class="weather-by-hour__item">
-                <div class="weather-by-hour__hour">10:30</div>
-                <img src="#" alt="Mostly sunny" />
-                <div>15&deg;</div>
-            </div>
-            <div class="weather-by-hour__item">
-                <div class="weather-by-hour__hour">10:30</div>
-                <img src="#" alt="Mostly sunny" />
-                <div>15&deg;</div>
-            </div>
-            <div class="weather-by-hour__item">
-                <div class="weather-by-hour__hour">10:30</div>
-                <img src="#" alt="Mostly sunny" />
-                <div>15&deg;</div>
-            </div>
-            <div class="weather-by-hour__item">
-                <div class="weather-by-hour__hour">10:30</div>
-                <img src="#" alt="Mostly sunny" />
-                <div>15&deg;</div>
-            </div>
-            <div class="weather-by-hour__item">
-                <div class="weather-by-hour__hour">10:30</div>
-                <img src="#" alt="Mostly sunny" />
-                <div>15&deg;</div>
-            </div>
-
         </div>
     </div>
 
@@ -122,196 +100,39 @@
 
     <div class="week">
         <h2 class="week__heading">Погода на следующую неделю</h2>
-        <div class="week__container">
-            <div class="week__row">
+        <div class="week__container" v-bind:class="{up: refCount === 0}">
+            <div class="week__row" v-for="el of daily">
                 <div class="week__date">
-                    30.10.2040
+                    {{getWeekDay(new Date(el.dt * 1000))}}
                     <div class="week__label">
-                       17:00
+                        {{(new Date(el.dt * 1000)).toLocaleString('ru', { day:
+                                '2-digit', month: '2-digit', })}}
                     </div>
                 </div>
 
                 <div class="week__low">
-                    10&deg;
+                    {{Math.round(el.temp.min - 273.15)}}&deg;
                     <div class="week__label">Мин</div>
                 </div>
 
                 <div class="week__high">
-                    12&deg;
+                    {{Math.floor(el.temp.max - 273.15)}}&deg;
                     <div class="week__label">Макс</div>
                 </div>
 
                 <div class="week__icon">
-                    <img src="#" alt="Sunny">
+                    <img
+                            :src=`http://openweathermap.org/img/wn/${el.weather[0].icon}@2x.png`
+                            alt="Sunny">
                 </div>
 
                 <div class="week__rain">
-                    10%
+                    {{el.humidity}}%
                     <div class="week__label">Влажность</div>
                 </div>
 
                 <div class="week__wind">
-                    10 м/с
-                    <div class="week__label">Ветер</div>
-                </div>
-            </div>
-            <div class="week__row">
-                <div class="week__date">
-                    30.10.2040
-                    <div class="week__label">
-                        17:00
-                    </div>
-                </div>
-
-                <div class="week__low">
-                    10&deg;
-                    <div class="week__label">Мин</div>
-                </div>
-
-                <div class="week__high">
-                    12&deg;
-                    <div class="week__label">Макс</div>
-                </div>
-
-                <div class="week__icon">
-                    <img src="#" alt="Sunny">
-                </div>
-
-                <div class="week__rain">
-                    10%
-                    <div class="week__label">Влажность</div>
-                </div>
-
-                <div class="week__wind">
-                    10 м/с
-                    <div class="week__label">Ветер</div>
-                </div>
-            </div>
-            <div class="week__row">
-                <div class="week__date">
-                    30.10.2040
-                    <div class="week__label">
-                        17:00
-                    </div>
-                </div>
-
-                <div class="week__low">
-                    10&deg;
-                    <div class="week__label">Мин</div>
-                </div>
-
-                <div class="week__high">
-                    12&deg;
-                    <div class="week__label">Макс</div>
-                </div>
-
-                <div class="week__icon">
-                    <img src="#" alt="Sunny">
-                </div>
-
-                <div class="week__rain">
-                    10%
-                    <div class="week__label">Влажность</div>
-                </div>
-
-                <div class="week__wind">
-                    10 м/с
-                    <div class="week__label">Ветер</div>
-                </div>
-            </div>
-            <div class="week__row">
-                <div class="week__date">
-                    30.10.2040
-                    <div class="week__label">
-                        17:00
-                    </div>
-                </div>
-
-                <div class="week__low">
-                    10&deg;
-                    <div class="week__label">Мин</div>
-                </div>
-
-                <div class="week__high">
-                    12&deg;
-                    <div class="week__label">Макс</div>
-                </div>
-
-                <div class="week__icon">
-                    <img src="#" alt="Sunny">
-                </div>
-
-                <div class="week__rain">
-                    10%
-                    <div class="week__label">Влажность</div>
-                </div>
-
-                <div class="week__wind">
-                    10 м/с
-                    <div class="week__label">Ветер</div>
-                </div>
-            </div>
-            <div class="week__row">
-                <div class="week__date">
-                    30.10.2040
-                    <div class="week__label">
-                        17:00
-                    </div>
-                </div>
-
-                <div class="week__low">
-                    10&deg;
-                    <div class="week__label">Мин</div>
-                </div>
-
-                <div class="week__high">
-                    12&deg;
-                    <div class="week__label">Макс</div>
-                </div>
-
-                <div class="week__icon">
-                    <img src="#" alt="Sunny">
-                </div>
-
-                <div class="week__rain">
-                    10%
-                    <div class="week__label">Влажность</div>
-                </div>
-
-                <div class="week__wind">
-                    10 м/с
-                    <div class="week__label">Ветер</div>
-                </div>
-            </div>
-            <div class="week__row">
-                <div class="week__date">
-                    30.10.2040
-                    <div class="week__label">
-                        17:00
-                    </div>
-                </div>
-
-                <div class="week__low">
-                    10&deg;
-                    <div class="week__label">Мин</div>
-                </div>
-
-                <div class="week__high">
-                    12&deg;
-                    <div class="week__label">Макс</div>
-                </div>
-
-                <div class="week__icon">
-                    <img src="#" alt="Sunny">
-                </div>
-
-                <div class="week__rain">
-                    10%
-                    <div class="week__label">Влажность</div>
-                </div>
-
-                <div class="week__wind">
-                    10 м/с
+                    {{Math.round(el.wind_speed)}} м/с
                     <div class="week__label">Ветер</div>
                 </div>
             </div>
@@ -320,21 +141,7 @@
 
     <!-- Информация, полученная из Nasa APOD API -->
 
-    <div class="nasa">
-        <h2 class="nasa__heading">Информация полученная Nasa</h2>
-        <div class="nasa__container">
-
-            <div class="nasa__item">
-
-                <div class="nasa__title">Звездное небо</div>
-                <img src="#" alt="Mostly sunny">
-                <div class="nasa__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum, odit.</div>
-
-            </div>
-
-
-        </div>
-    </div>
+    <nasa-component></nasa-component>
 
 </main>
 </body>
